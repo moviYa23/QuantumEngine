@@ -1,0 +1,17 @@
+{
+  "UpdateCheck": true,
+  "AI_Enabled": true,
+  "Theme": "Dark",
+  "QuantumProviders": [
+    "LocalSimulator"
+  ],
+  "Version": "1.0.0",
+  "DefaultMode": "Standard",
+  "LogLevel": "INFO",
+  "Modules": {
+    "TerminalIcons": true,
+    "PSReadLine": true,
+    "PoshGit": false
+  },
+  "AutoStart": true
+}

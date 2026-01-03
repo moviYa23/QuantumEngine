@@ -1,0 +1,38 @@
+{
+  "Paths": {
+    "Logs": "C:\\Users\\user\\Documents\\PowerShell\\QuantumEngine\\Logs",
+    "Configs": "C:\\Users\\user\\Documents\\PowerShell\\QuantumEngine\\Config",
+    "Data": "C:\\Users\\user\\Documents\\PowerShell\\QuantumEngine\\Data",
+    "Modules": "C:\\Users\\user\\Documents\\PowerShell\\QuantumEngine\\Modules",
+    "Scripts": "C:\\Users\\user\\Documents\\PowerShell\\QuantumEngine\\Scripts"
+  },
+  "Features": {
+    "LoggingLevel": "Detailed",
+    "CloudSync": false,
+    "QuantumSimulation": false,
+    "EnableAI": true,
+    "AutoStart": true
+  },
+  "Integrations": {
+    "AIProviders": [
+      "OpenAI",
+      "AzureAI",
+      "Local"
+    ],
+    "Git": {
+      "Enabled": true,
+      "AutoCommit": false
+    },
+    "Python": {
+      "Version": "",
+      "Enabled": false,
+      "Path": ""
+    }
+  },
+  "System": {
+    "Name": "QuantumEngine Professional",
+    "Version": "2.0.0",
+    "Author": "IAEngineer Team",
+    "LastUpdated": "2026-01-03 16:35:51"
+  }
+}
