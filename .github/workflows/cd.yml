@@ -1,0 +1,23 @@
+name: QuantumEngine CD
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Publish to PowerShell Gallery
+      run: |
+        $apiKey = ${{ secrets.PSGALLERY_API_KEY }}
+        Publish-Module -Path ./Modules/QuantumEngine -NuGetApiKey $apiKey
+        
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: QuantumEngine-*.zip
+        generate_release_notes: true
