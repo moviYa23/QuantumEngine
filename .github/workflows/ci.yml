@@ -11,8 +11,9 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
     - name: Setup PowerShell
       uses: actions/setup-powershell@v3
       
@@ -24,7 +25,11 @@ jobs:
     - name: Run Pester Tests
       run: |
         $testResults = Invoke-Pester -Path ./Tests -Output Detailed -PassThru
-        if ($testResults.FailedCount -gt 0) { exit 1 }
+        if ($testResults.FailedCount -gt 0) {
+          Write-Host "❌ Tests failed: $($testResults.FailedCount)" -ForegroundColor Red
+          exit 1
+        }
+        Write-Host "✅ All tests passed: $($testResults.PassedCount)" -ForegroundColor Green
         
     - name: Run Script Analyzer
       run: |
@@ -42,8 +47,9 @@ jobs:
     needs: test
     
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
     - name: Create Release Package
       run: |
         $version = "2.0.0"
