@@ -1,0 +1,78 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - orchestrator
+    restart: unless-stopped
+
+  orchestrator:
+    build: ./orchestrator
+    command: uvicorn orchestrator.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/moviyang
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+  ecommerce:
+    build: ./ecommerce
+    ports:
+      - "8001:8001"
+    environment:
+      - ORCHESTRATOR_URL=http://orchestrator:8000
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/moviyang
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  logistics:
+    build: ./logistics
+    ports:
+      - "8002:8002"
+    environment:
+      - ORCHESTRATOR_URL=http://orchestrator:8000
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/moviyang
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  finance:
+    build: ./finance
+    ports:
+      - "8003:8003"
+    environment:
+      - ORCHESTRATOR_URL=http://orchestrator:8000
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/moviyang
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=moviyang
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  db-data:
